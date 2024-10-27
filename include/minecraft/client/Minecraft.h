@@ -22,7 +22,7 @@ namespace mc {
 		struct Timer* timer;
 		uint32_t field_0x24;
 		uint32_t field_0x28;
-		uint32_t field_0x2c;
+		bool field_0x2c;
 		struct LevelRenderer* levelRenderer;
 		struct LocalPlayer* thePlayer;
 		uint32_t field_0x38;

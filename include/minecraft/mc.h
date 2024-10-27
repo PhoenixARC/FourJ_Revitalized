@@ -10,6 +10,7 @@
 #include "client/app/CMinecraftApp.h"
 #include "client/app/ConsoleUIController.h"
 #include "client/app/CProfile.h"
+#include "client/app/GameSettings.h"
 #include "client/app/Options.h"
 #include "client/app/System.h"
 
@@ -108,6 +109,7 @@
 #include "ui/scene/UIScene.h"
 #include "ui/scene/SettingsMenu.h"
 #include "ui/scene/Scenes/UIScene_DebugMenu.h"
+#include "ui/scene/Scenes/UIScene_HelpAndOptionsMenu.h"
 #include "ui/scene/Scenes/UIScene_HowToPlayMenu.h"
 #include "ui/layer/UILayer.h"
 #include "ui/control/UIControl.h"

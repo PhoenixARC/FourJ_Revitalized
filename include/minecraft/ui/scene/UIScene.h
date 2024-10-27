@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../client/resource/vector.h"
+#include "../control/UIControl.h"
 namespace mc {
     class UIScene {
     public:
@@ -29,6 +30,74 @@ namespace mc {
 		{
 			code::Func<void, 0x02e84614, UIScene*, UIScene*>()(this, BackScene); 
 		}
+		void removeControl(UIControl* control, int ID)
+		{
+			code::Func<void, 0x02e636a8, UIScene*, UIControl*, int>()(this, control, ID); 
+		}
+		
+		enum SceneID : uint32_t	{
+			Empty = 0,
+			Intro,
+			SaveMessage,
+			Main,
+			FullScreenProgress,
+			Pause,
+			Crafting,
+			Crafting2,
+			Furnace,
+			Container,
+			Container2,
+			Inventory,
+			Dispenser,
+			Debug,
+			Debug2,
+			HelpAndOptions,
+			HowToPlay,
+			HowToPlayMenu,
+			ControlsMenu,
+			SettingsListMenu,
+			InGameSettingsListMenu,
+			SettingsMenu,
+			LeaderboardsMenu,
+			Credits,
+			DeathMenu,
+			CreateWorldMenu,
+			LoadCreateJoinMenu,
+			JoinMenu,
+			SignEntryMenu,
+			InGameInfoMenu,
+			ConnectingProgress,
+			DLCOffersMenu,
+			TrialExitUpsell,
+			LoadMenu,
+			ReinstallMenu,
+			SkinSelectMenu,
+			InGameHostOptionsMenu,
+			InGamePlayerOptionsMenu,
+			CreativeMenu,
+			LaunchMoreOptionsMenu,
+			DLCMainMenu,
+			NewUpdateMessage,
+			EnchantingMenu,
+			BrewingStandMenu,
+			IsSceneInStack,
+			EndPoem,
+			TradingMenu,
+			AnvilMenu,
+			TeleportMenu,
+			HopperMenu,
+			BeaconMenu,
+			HorseInventoryMenu,
+			ClassicCraftingMenu,
+			SuperFlatMenu,
+			SuperFlatEditLayer,
+			SuperFlatPresets,
+			GameModeScoreboardMenu,
+			WritableBookMenu,
+			MapVoteMenu,
+			MapSelectMenu,
+			BiomePreviewMenu,
+		};
 		
 		uint32_t field_0x0;
 		uint32_t UIScontrol;

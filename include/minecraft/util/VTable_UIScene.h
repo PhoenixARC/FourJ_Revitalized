@@ -46,7 +46,7 @@ namespace mc {
         MC_VFUNC(void,         struct UIScene, handleFocusChange);
         MC_VFUNC(void,         struct UIScene, handleInitFocus);
         MC_VFUNC(void,         struct UIScene, handleCheckboxToggled);
-        MC_VFUNC(void,         struct UIScene, handleCheckboxElementToggled);
+        MC_VFUNC(void,         struct UIScene, handleCheckboxElementToggled, int, int, bool);
         MC_VFUNC(void,         struct UIScene, handleSliderMove);
         MC_VFUNC(void,         struct UIScene, handleSliderElementMove);
         MC_VFUNC(void,         struct UIScene, handleAnimationEnd);

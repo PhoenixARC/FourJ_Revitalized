@@ -25,6 +25,5 @@ SECTIONS {
     *(.ext)
     *(.ext.*)
     data_end = .;
-    __end__ = .;
   } > TEXT_MEM
 }

@@ -16,39 +16,20 @@ namespace mc {
 			memcpy(DebugUIVtbl, (VTable_UIScene*)0x1038574c, sizeof(VTable_UIScene));
 			DebugUIVtbl->mapElementsAndNames = 	&mapElementsAndNames;
 			DebugUIVtbl->getMoviePath = 		&getMoviePath;
+			DebugUIVtbl->handleCheckboxElementToggled = 		&HandleCheckboxElementToggled;
 			
 			this->vtbl = DebugUIVtbl;
 			
 			UIControl_MultiList(&this->HowToList);
 			this->initialiseMovie();
+			mc::GameSettings* settings = (mc::GameSettings*)mc::GameSettings::GetGameSettingsDebugMask(0xFFABCD00, 0);
 			
-			uint32_t options[] = {
-				((uint32_t)(L"Load Saves From Local Folder Mode")),
-				((uint32_t)(L"Write Saves To Local Folder Mode")),
-				((uint32_t)(L"Freeze Players")),
-				((uint32_t)(L"Display Safe Area")),
-				((uint32_t)(L"Mobs don't attack")),
-				((uint32_t)(L"Freeze Time")),
-				((uint32_t)(L"Disable Weather")),
-				((uint32_t)(L"Craft Anything")),
-				((uint32_t)(L"Use DPad for debug")),
-				((uint32_t)(L"Mobs don't tick")),
-				((uint32_t)(L"Art tools")),
-				((uint32_t)(L"Show UI Console")),
-				((uint32_t)(L"Distributable Save")),
-				((uint32_t)(L"Debug Leaderboards")),
-				((uint32_t)(L"Height-Water Maps")),
-				((uint32_t)(L"Superflat Nether")),
-				((uint32_t)(L"More lightning when thundering")),
-				((uint32_t)(L"Biome override")),
-				((uint32_t)(L"Go To Overworld")),
-				((uint32_t)(L"Unlock All DLC")),
-				((uint32_t)(L"Show Marketing Guide"))
-			};
 			int i = 0;
-			for(uint32_t option : options)
+			for(mc::DebugSetting* setting : settings->debugSettings)
 			{
-				this->HowToList.AddNewCheckbox(*(new mstd::wstring(((wchar_t*)option))), i, false);
+				if(setting->Type == mc::DebugSetting::eSettingType::BOOL) {
+					this->HowToList.AddNewCheckbox(*(new mstd::wstring((setting->SettingName))), i, (bool)setting->Value);
+				}
 				i++;
 			}
 			
@@ -84,6 +65,13 @@ namespace mc {
 			code::Func<void, 0x02e34e18, uint32_t*, UIControl_MultiList**>()((uint32_t*)&scene->UIControl_Vector, &ControlPTR); // vector<UIControl*>.push_back
 			return true;
 		}
+		
+		static void HandleCheckboxElementToggled(UIScene* _this, int ID, int ID2, bool State)
+		{
+			mc::GameSettings* settings = (mc::GameSettings*)mc::GameSettings::GetGameSettingsDebugMask(0xFFABCD00, 0);
+			settings->SetGameSetting(ID2, (uint32_t)State);
+		}
+		
 		static void Log(const wchar_t* text)
 		{
 			code::Func<void, 0x0382F6B8, const char*, const wchar_t*>()("%ls\n", text);

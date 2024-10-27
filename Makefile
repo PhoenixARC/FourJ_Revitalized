@@ -35,18 +35,18 @@ SOURCES		   := .
 DATA		   :=
 INCLUDES	   :=  include
 
+ASM_PATH    :=  C:/Users/phoen/OneDrive/Documents/Emulators/cemu/Cemu_2.0-45/graphicPacks/downloadedGraphicPacks/MinecraftWiiUEdition_Client/patch_auc.asm
+# ASM_PATH    :=  C:/Users/David/Documents/BIN/graphicPacks/!Minecraft Cheats/Assembly/Aurora Client/patch_auc.asm
 # You might want to add one if those don't work (Issue with newer Cemu Versions)
 MODULE_MATCHES := 0x867317DE,0x6237F45C,0x90112329
 
-ASM_PATH       := GraphicPack/patch_codelib.asm
-# ASM_PATH       := C:/Users/David/Documents/BIN/graphicPacks/!Minecraft Cheats/Assembly/Aurora Client/patch_auc.asm
 
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
-CFLAGS	 :=  -std=gnu17 -mrvl -nostdlib -mcpu=750 -meabi -mhard-float -ffast-math -fshort-wchar -finline -Wl,-q -nostartfiles -fdata-sections -ffunction-sections \
+CFLAGS	 :=  -std=gnu17      -mrvl -nostdlib -mcpu=750 -meabi -mhard-float -ffast-math -fshort-wchar -finline -Wl,-q -nostartfiles -fdata-sections -ffunction-sections \
 		      -Os -D_GNU_SOURCE $(INCLUDE)
-CXXFLAGS :=  -std=gnu++17 -mrvl -nostdlib -mcpu=750 -meabi -mhard-float -ffast-math -fshort-wchar -finline -Wl,-q -nostartfiles -fdata-sections -ffunction-sections \
+CXXFLAGS :=  -std=gnu++17 -w -mrvl -nostdlib -mcpu=750 -meabi -mhard-float -ffast-math -fshort-wchar -finline -Wl,-q -nostartfiles -fdata-sections -ffunction-sections \
 		      -Os -D_GNU_SOURCE $(INCLUDE)
 ASFLAGS	:= -mregnames
 LDFLAGS	:= -Wl,-Map,$(notdir $@).map,--gc-sections
@@ -132,12 +132,12 @@ clean:
 	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).bin $(BUILD_DBG).elf
 
 all:
-	@make clean
 	@make
 	@echo "Creating text_section.bin";
 	@$(OBJCOPY) --only-section=.text $(TARGET).elf -O binary $(BUILD)/text_section.bin
 	@echo "Creating .asm Content and Writing it to: $(ASM_PATH)"
-	@python -c 'with open("$(BUILD)/text_section.bin", "rb") as f: print("[Wrapper]\nmoduleMatches = ${MODULE_MATCHES}\n\n0x02F37154 = b _onStart\n\n0x104D4DD8 = .uint _Code\n0x104D4DDC = .uint 0x0\n\n.origin = codecave\n\n# .text\n_Code:"); print(".uint", end=" 0x"); [print("%02x" % val, end="" if i % 4 != 0 else "\n.uint 0x") for i, val in enumerate(f.read(), 1)]; print("00000000\n\n_onStart:\nbctrl\nlis r12, _Code@ha\naddi r12, r12, _Code@l\nmtctr r12\nbctrl\nb 0x02F37158")' > "$(ASM_PATH)"
+	@python py1.py > "$(ASM_PATH)"
+# 	@python -c 'with open("$(BUILD)/text_section.bin", "rb") as f: print("[Wrapper]\nmoduleMatches = 0x867317DE,0x6237F45C,0x90112329\n\n0x02F37154 = b _onStart\n\n0x104D4DD8 = .uint _Code\n0x104D4DDC = .uint 0x0\n\n.origin = codecave\n\n# .text\n_Code:"); print(".uint", end=" 0x"); [print("%02x" % val, end="" if i % 4 != 0 else "\n.uint 0x") for i, val in enumerate(f.read(), 1)]; print("00000000\n\n_onStart:\nbctrl\nlis r12, _Code@ha\naddi r12, r12, _Code@l\nmtctr r12\nbctrl\nb 0x02F37158")' > "$(ASM_PATH)"
 	@python -c 'with open("$(ASM_PATH)") as f: print("Total Lines Written: " + str(sum(1 for _ in f)));'
 #---------------------------------------------------------------------------------
 else
