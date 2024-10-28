@@ -111,6 +111,7 @@
 #include "ui/scene/Scenes/UIScene_DebugMenu.h"
 #include "ui/scene/Scenes/UIScene_HelpAndOptionsMenu.h"
 #include "ui/scene/Scenes/UIScene_HowToPlayMenu.h"
+#include "ui/scene/Components/UIComponent_DebugUIConsole.h"
 #include "ui/layer/UILayer.h"
 #include "ui/control/UIControl.h"
 #include "ui/control/UIControl_Base.h"
@@ -155,6 +156,7 @@
 #include "world/gamemode/ServerPlayerGameMode.h"
 
 #include "world/Level.h"
+#include "world/Dimension.h"
 #include "world/ServerLevel.h"
 
 // Prints a message into Chat.

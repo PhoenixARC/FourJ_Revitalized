@@ -37,26 +37,19 @@ namespace mc {
 		GameSettings()
 		{
 			this->debugSettings = {};
-			this->debugSettings.push_back(new mc::DebugSetting(L"Load Saves From Local Folder Mode", DebugSetting::eSettingType::BOOL, 0));
-			this->debugSettings.push_back(new mc::DebugSetting(L"Write Saves To Local Folder Mode", DebugSetting::eSettingType::BOOL, 0));
 			this->debugSettings.push_back(new mc::DebugSetting(L"Freeze Players", DebugSetting::eSettingType::BOOL, 0)); //
 			this->debugSettings.push_back(new mc::DebugSetting(L"Mobs don't attack", DebugSetting::eSettingType::BOOL, 0)); //
 			this->debugSettings.push_back(new mc::DebugSetting(L"Freeze Time", DebugSetting::eSettingType::BOOL, 0)); // 
 			this->debugSettings.push_back(new mc::DebugSetting(L"Disable Weather", DebugSetting::eSettingType::BOOL, 0));
 			this->debugSettings.push_back(new mc::DebugSetting(L"Craft Anything", DebugSetting::eSettingType::BOOL, 0));
-			this->debugSettings.push_back(new mc::DebugSetting(L"Use DPad for debug", DebugSetting::eSettingType::BOOL, 0));
+			//this->debugSettings.push_back(new mc::DebugSetting(L"Use DPad for debug", DebugSetting::eSettingType::BOOL, 0));
 			this->debugSettings.push_back(new mc::DebugSetting(L"Mobs don't tick", DebugSetting::eSettingType::BOOL, 0));
 			this->debugSettings.push_back(new mc::DebugSetting(L"Art tools", DebugSetting::eSettingType::BOOL, 0));
 			this->debugSettings.push_back(new mc::DebugSetting(L"Show UI Console", DebugSetting::eSettingType::BOOL, 0));
-			this->debugSettings.push_back(new mc::DebugSetting(L"Distributable Save", DebugSetting::eSettingType::BOOL, 0));
-			this->debugSettings.push_back(new mc::DebugSetting(L"Debug Leaderboards", DebugSetting::eSettingType::BOOL, 0));
-			this->debugSettings.push_back(new mc::DebugSetting(L"Height-Water Maps", DebugSetting::eSettingType::BOOL, 0));
-			this->debugSettings.push_back(new mc::DebugSetting(L"Superflat Nether", DebugSetting::eSettingType::BOOL, 0));
-			this->debugSettings.push_back(new mc::DebugSetting(L"More lightning when thundering", DebugSetting::eSettingType::BOOL, 0));
+			//this->debugSettings.push_back(new mc::DebugSetting(L"Distributable Save", DebugSetting::eSettingType::BOOL, 0));
+			//this->debugSettings.push_back(new mc::DebugSetting(L"Height-Water Maps", DebugSetting::eSettingType::BOOL, 0));
 			this->debugSettings.push_back(new mc::DebugSetting(L"Biome override", DebugSetting::eSettingType::BOOL, 0));
-			this->debugSettings.push_back(new mc::DebugSetting(L"Go To Overworld", DebugSetting::eSettingType::BOOL, 0));
 			this->debugSettings.push_back(new mc::DebugSetting(L"Unlock All DLC", DebugSetting::eSettingType::BOOL, 0));
-			this->debugSettings.push_back(new mc::DebugSetting(L"Show Marketing Guide", DebugSetting::eSettingType::BOOL, 0));
 		}
 		
 		uint32_t GetGameSetting(uint32_t setting)
@@ -83,26 +76,21 @@ namespace mc {
 		
 		enum eDebugSetting : uint32_t
 		{
-			LoadFromLocalFolder = 0,
-			WriteToLocalFolder,
-			FreezePlayers,
+			//LoadFromLocalFolder,
+			//WriteToLocalFolder,
+			FreezePlayers = 0,
 			MobsDontAttack,
 			FreezeTime,
 			DisableWeather,
 			CraftAnything,
-			UseDPadForDebug,
+			//UseDPadForDebug,
 			MobsDontTick,
 			ArtTools,
 			ShowUIConsole,
-			DistributableSave,
-			DebugLeaderboards,
-			HeightWaterMaps,
-			SuperflatNether,
-			MoreLightningWhenThundering,
+			//DistributableSave,
+			//HeightWaterMaps,
 			BiomeOverride,
-			GoToOverworld,
 			UnlockAllDLC,
-			ShowMarketingGuide
 		};
 		
 		xf::Vector<DebugSetting*> debugSettings;

@@ -11,6 +11,7 @@ namespace xf {
 		
 
 mc::GameSettings* DebugSettings;
+uint32_t DebugConsole;
 
 
         class Debug {

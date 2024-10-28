@@ -135,7 +135,7 @@ namespace mc {
 		uint32_t field_0x84;
 		uint32_t field_0x88;
 		mstd::vector<uint32_t> UIControl_Vector;
-		struct UILayer* UILayer;
+		struct UILayer* Layer;
 		uint32_t field_0xA0;
 		uint32_t UISceneID;
 		uint32_t field_0xA8;

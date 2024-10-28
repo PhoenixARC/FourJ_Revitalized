@@ -4,6 +4,7 @@
 #include "../../control/object/UIControl_ButtonList.h"
 #include "../../control/object/UIControl_CheckboxButtonList.h"
 #include "../../../util/VTable_UIScene.h"
+#include "../../layer/UILayer.h"
 
 namespace mc {
     class UIScene_DebugMenu : public UIScene {
@@ -70,6 +71,14 @@ namespace mc {
 		{
 			mc::GameSettings* settings = (mc::GameSettings*)mc::GameSettings::GetGameSettingsDebugMask(0xFFABCD00, 0);
 			settings->SetGameSetting(ID2, (uint32_t)State);
+			
+			
+			mc::ConsoleUIController* cuic = mc::ConsoleUIController::getInstance();
+			
+			if(ID2 == mc::GameSettings::eDebugSetting::ShowUIConsole)
+			{
+				cuic->ShowUIDebugConsole(State);
+			}
 		}
 		
 		static void Log(const wchar_t* text)
