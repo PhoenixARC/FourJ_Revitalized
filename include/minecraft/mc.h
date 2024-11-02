@@ -49,6 +49,7 @@
 #include "entity/AreaEffectCloud.h"
 #include "entity/ArmorStand.h"
 #include "entity/Entity.h"
+#include "entity/Camera.h"
 #include "entity/EvocationFangs.h"
 #include "entity/ItemEntity.h"
 #include "entity/ItemFrame.h"
@@ -100,6 +101,7 @@
 #include "rendering/buffer/BufferBuilder.h"
 #include "rendering/buffer/BufferedImage.h"
 
+#include "rendering/GameRenderer.h"
 #include "rendering/CameraController.h"
 #include "rendering/Font.h"
 #include "rendering/GlStateManager.h"

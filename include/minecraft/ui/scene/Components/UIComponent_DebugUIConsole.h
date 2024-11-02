@@ -41,6 +41,46 @@ namespace mc {
 			this->ConsoleLine10.SetLabel(*(new UIString(Message)), 						 false, false);
 		}
 		
+		void SetConsoleLine(wchar_t* Message, int LineNumber = 0)
+		{
+			switch(LineNumber) {
+				case 1:
+					this->ConsoleLine1.SetLabel(*(new UIString(Message)), false, false);
+				break;
+				case 2:
+					this->ConsoleLine2.SetLabel(*(new UIString(Message)), false, false);
+				break;
+				case 3:
+					this->ConsoleLine3.SetLabel(*(new UIString(Message)), false, false);
+				break;
+				case 4:
+					this->ConsoleLine4.SetLabel(*(new UIString(Message)), false, false);
+				break;
+				case 5:
+					this->ConsoleLine5.SetLabel(*(new UIString(Message)), false, false);
+				break;
+				case 6:
+					this->ConsoleLine6.SetLabel(*(new UIString(Message)), false, false);
+				break;
+				case 7:
+					this->ConsoleLine7.SetLabel(*(new UIString(Message)), false, false);
+				break;
+				case 8:
+					this->ConsoleLine8.SetLabel(*(new UIString(Message)), false, false);
+				break;
+				case 9:
+					this->ConsoleLine9.SetLabel(*(new UIString(Message)), false, false);
+				break;
+				case 10:
+					this->ConsoleLine10.SetLabel(*(new UIString(Message)), false, false);
+				break;
+				default:
+					this->AddToConsole(Message);
+				break;
+				
+			}
+		}
+		
 		
 		UIControl_Label ConsoleLine1;
 		UIControl_Label ConsoleLine2;

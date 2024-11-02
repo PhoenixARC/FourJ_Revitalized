@@ -50,6 +50,10 @@ namespace mc {
         static void rotatef(float x, float y, float z, float w) {
             code::Func<void, 0x030E4B84, float, float, float, float>()(x, y, z, w);
         }
+		
+        static void rotate(float rot) {
+            code::Func<void, 0x030E4B84, float>()(rot);
+        }
 
         static void popMatrix() {
             code::Func<void, 0x030E4BD8>()();
@@ -117,6 +121,34 @@ namespace mc {
 
         static void disableFog() {
             code::Func<void, 0x03108C44>()();
+        }
+        static void enableFog() {
+            code::Func<void, 0x03108ba4>()();
+        }
+        static void disableAlphaTest() {
+            code::Func<void, 0x03108e10>()();
+        }
+
+        static void enableAlphaTest() {
+            code::Func<void, 0x031056BC>()();
+        }
+
+        static void activeTexture(uint32_t ImgID) {
+            code::Func<void, 0x03124eec, uint32_t>()(ImgID);
+        }
+		
+        static void bindTexture(uint32_t ImgID) {
+            code::Func<void, 0x030e4750, uint32_t>()(ImgID);
+        }
+		
+        static void texParameteri(uint32_t x, uint32_t Y) {
+            code::Func<void, 0x031216d4, uint32_t, uint32_t>()(x, Y);
+        }
+        static void blendFuncSeparate(uint32_t x1, uint32_t x2, uint32_t x3, uint32_t x4) {
+            code::Func<void, 0x0310B478, uint32_t, uint32_t, uint32_t, uint32_t>()(x1, x2, x3, x4);
+        }
+        static void shadeModel(uint32_t model) {
+            code::Func<void, 0x031251FC, uint32_t>()(model);
         }
     };
 }

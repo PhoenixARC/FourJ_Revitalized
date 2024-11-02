@@ -42,7 +42,7 @@ namespace mc {
         MC_VFUNC(void,         struct UIScene, handlePreUnloadForReload);
         MC_VFUNC(void,         struct UIScene, handlePreReload);
         MC_VFUNC(void,         struct UIScene, handleReload);
-        MC_VFUNC(void,         struct UIScene, handlePress);
+        MC_VFUNC(void,         struct UIScene, handlePress, int, int);
         MC_VFUNC(void,         struct UIScene, handleFocusChange);
         MC_VFUNC(void,         struct UIScene, handleInitFocus);
         MC_VFUNC(void,         struct UIScene, handleCheckboxToggled);

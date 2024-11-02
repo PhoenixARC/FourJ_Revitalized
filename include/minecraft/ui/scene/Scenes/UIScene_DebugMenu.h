@@ -18,6 +18,7 @@ namespace mc {
 			DebugUIVtbl->mapElementsAndNames = 	&mapElementsAndNames;
 			DebugUIVtbl->getMoviePath = 		&getMoviePath;
 			DebugUIVtbl->handleCheckboxElementToggled = 		&HandleCheckboxElementToggled;
+			DebugUIVtbl->handlePress = 							&handlePress;
 			
 			this->vtbl = DebugUIVtbl;
 			
@@ -30,6 +31,9 @@ namespace mc {
 			{
 				if(setting->Type == mc::DebugSetting::eSettingType::BOOL) {
 					this->HowToList.AddNewCheckbox(*(new mstd::wstring((setting->SettingName))), i, (bool)setting->Value);
+				}
+				if(setting->Type == mc::DebugSetting::eSettingType::FUNCTION) {
+					this->HowToList.AddNewButton(*(new mstd::wstring((setting->SettingName))), i, true);
 				}
 				i++;
 			}
@@ -79,6 +83,17 @@ namespace mc {
 			{
 				cuic->ShowUIDebugConsole(State);
 			}
+		}
+		
+		static void handlePress(UIScene* _this, int ID, int ID2)
+		{
+			mc::GameSettings* settings = (mc::GameSettings*)mc::GameSettings::GetGameSettingsDebugMask(0xFFABCD00, 0);
+			
+			//switch(ID2){
+				//case mc::GameSettings::eDebugSetting::DumpLocalPlayer:
+				//((void (*)())settings->debugSettings[ID2]->Value)();
+				//break;
+			//}
 		}
 		
 		static void Log(const wchar_t* text)

@@ -147,12 +147,7 @@ namespace mc {
 		mc_boost::shared_ptr<Entity> vehicle;
 		uint32_t field_0xF4;
 		struct Level* lvl;  
-		uint32_t field_0xFC; 
-		uint32_t field_0x100;
-		uint32_t field_0x104;
-		uint32_t field_0x108;
-		uint32_t field_0x10C;
-		uint32_t field_0x110;
+		Vec3 oldPosition; 
 		Vec3 position;       
 		Vec3 motion;  
 		float yaw;         
@@ -185,12 +180,7 @@ namespace mc {
 		uint32_t field_0x1B4;
 		uint32_t field_0x1B8;
 		uint32_t field_0x1BC;
-		uint32_t field_0x1C0;
-		uint32_t field_0x1C4;
-		uint32_t field_0x1C8;
-		uint32_t field_0x1CC;
-		uint32_t field_0x1D0;
-		uint32_t field_0x1D4;
+		Vec3 CameraPos;
 		float step;
 		uint32_t blockAABB;
 		uint32_t field_0x1E0;

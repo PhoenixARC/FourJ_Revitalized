@@ -100,7 +100,7 @@ namespace mc {
         uint32_t field_0x934;
         uint32_t field_0x938;
         uint32_t field_0x93C;
-        uint32_t field_0x940;
+        uint32_t ThirdPersonCamera;
         uint32_t field_0x944;
 		uint32_t field_0x948;
 		uint32_t field_0x94C;

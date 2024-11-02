@@ -124,6 +124,42 @@ DECL_FUNCTION(mc::UIComponent_DebugUIConsole*, ct_UIComponent_DebugConsole, mc::
 	xf::DebugConsole = (uint32_t)_this;
 	return _this;
 }
+DECL_FUNCTION(void, dt_UIComponent_DebugConsole, mc::UIComponent_DebugUIConsole* Val) {
+	real_dt_UIComponent_DebugConsole(Val);
+	if(xf::DebugConsole == (uint32_t)Val)
+		xf::DebugConsole = 0;
+}
+DECL_FUNCTION(void, GameRenderer_moveCameraToPlayer, uint32_t th, uint32_t is) {
+	//if(xf::DebugSettings->GetGameSetting(mc::GameSettings::eDebugSetting::UnlockCamera) == 0)
+		real_GameRenderer_moveCameraToPlayer(th, is);
+	
+}
+DECL_HOOK(onFrameInGame, void) {
+	if(xf::DebugSettings->GetGameSetting(mc::GameSettings::eDebugSetting::ShowDevText) != 0)
+		debug.ShowDevelopmentText();
+	if(xf::DebugConsole != 0 && mc::Minecraft::getInstance()->thePlayer != nullptr) { 
+		mc::UIComponent_DebugUIConsole* console = (mc::UIComponent_DebugUIConsole*)xf::DebugConsole;
+		mc::LocalPlayer* player = mc::Minecraft::getInstance()->thePlayer;
+		wchar_t* Line1 = new wchar_t[0x80];
+		wchar_t* Line2 = new wchar_t[0x80];
+		wchar_t* Line3 = new wchar_t[0x80];
+		wchar_t* Line4 = new wchar_t[0x80];
+		wchar_t* Line5 = new wchar_t[0x80];
+		wchar_t* Line6 = new wchar_t[0x80];
+		mc_swprintf(Line1, 0x80, L"%ls -- %ls", player->customSkinPath.c_str(), player->customCapePath.c_str());
+		mc_swprintf(Line2, 0x80, L"XYZ [%s, %s, %s]", toCStr(player->position.x), toCStr(player->position.y), toCStr(player->position.z));
+		mc_swprintf(Line3, 0x80, L"Motion [%s, %s, %s]", toCStr(player->motion.x), toCStr(player->motion.y), toCStr(player->motion.z));
+		mc_swprintf(Line4, 0x80, L"Rotation [%s, %s]", toCStr(player->yaw), toCStr(player->pitch));
+		console->SetConsoleLine(Line1, 1);
+		console->SetConsoleLine(Line2, 2);
+		console->SetConsoleLine(Line3, 3);
+		console->SetConsoleLine(Line4, 4);
+	}
+}
+DECL_HOOK(onFrameInMenu, void) {
+	if(xf::DebugSettings->GetGameSetting(mc::GameSettings::eDebugSetting::ShowDevText) != 0)
+		debug.ShowDevelopmentText();
+}
 
 int c_main(void*) {
     code::init();
@@ -139,8 +175,12 @@ int c_main(void*) {
     REPLACE(0x02F5C874,  CMinecraftApp_DebugArtToolsOn);
     REPLACE(0x02AE8B54,  DLCPack_hasPurchasedPack);
     REPLACE(0x02E0A12C,  ct_UIComponent_DebugConsole);
+    REPLACE(0x02E2699C,  dt_UIComponent_DebugConsole);
     REPLACE(0x02f5c86c,  CMinecraftApp_DebugSettingsOn);
     REPLACE(0x020f66bc,  Biome_byId);
+    REPLACE(0x031013B8,  GameRenderer_moveCameraToPlayer);
+    HOOK(	0x02D9CAD0, onFrameInGame, 0);
+    HOOK(	0x02D9C8B0, onFrameInMenu, 0);
 
     return 0;
 }
