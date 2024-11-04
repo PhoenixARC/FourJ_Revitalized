@@ -5,6 +5,10 @@
 
 xf::Debug debug;
 
+static void Log(const wchar_t* text)
+{
+	code::Func<void, 0x0382F6B8, const char*, const wchar_t*>()("%ls\n", text);
+}
 DECL_FUNCTION(uint32_t, NavigateToScene, mc::UILayer* _this, uint32_t p2, mc::UIScene::SceneID SceneID, uint32_t p4) {
 	
 	switch(SceneID)
@@ -98,6 +102,8 @@ DECL_FUNCTION(double, Level_getRainLevel, uint32_t serverLevel, float val) {
 DECL_FUNCTION(bool, GameSettings_isDebugSettingEnabled, uint32_t Setting, uint32_t mask) {
 	if(xf::DebugSettings->GetGameSetting(mc::GameSettings::eDebugSetting::CraftAnything) != 0 && Setting == 0xE)
 		return true;
+	if(xf::DebugSettings->GetGameSetting(mc::GameSettings::eDebugSetting::moreThunder) != 0 && Setting == 0xD)
+		return true;
 	return false;
 }
 DECL_FUNCTION(bool, CMinecraftApp_DebugArtToolsOn, uint32_t Setting) {
@@ -134,9 +140,51 @@ DECL_FUNCTION(void, GameRenderer_moveCameraToPlayer, uint32_t th, uint32_t is) {
 		real_GameRenderer_moveCameraToPlayer(th, is);
 	
 }
+DECL_FUNCTION(bool, BufferedImage_setMipmapEnable, mc::BufferBuilder* _this, bool flag) {
+	if(xf::DebugSettings->GetGameSetting(mc::GameSettings::eDebugSetting::DisableMipmap) == 0)
+		return real_BufferedImage_setMipmapEnable(_this, flag);
+	return real_BufferedImage_setMipmapEnable(_this, false);
+	
+}
+DECL_FUNCTION(void, Renderer_StateSetFogFarDistance, float distance) {
+	if(xf::DebugSettings->GetGameSetting(mc::GameSettings::eDebugSetting::JavaFog) == 0)
+		real_Renderer_StateSetFogFarDistance(distance);
+	real_Renderer_StateSetFogFarDistance( (16.0f * 11.0f) );
+	
+}
+DECL_FUNCTION(void, Renderer_StateSetFogNearDistance, float distance) {
+	if(xf::DebugSettings->GetGameSetting(mc::GameSettings::eDebugSetting::JavaFog) == 0)
+		real_Renderer_StateSetFogNearDistance(distance);
+	real_Renderer_StateSetFogNearDistance( (16.0f * 10.0f) );
+	
+}
+DECL_FUNCTION(void, Renderer_StateSetFogDensity, float density) {
+	if(xf::DebugSettings->GetGameSetting(mc::GameSettings::eDebugSetting::JavaFog) == 0)
+		real_Renderer_StateSetFogDensity(density);
+	real_Renderer_StateSetFogDensity( 0.1f );
+	
+}
+DECL_FUNCTION(void, UIComponent_Tooltips_render, uint32_t comp, int i1, int i2, uint32_t enumVal) {
+	if(xf::DebugSettings->GetGameSetting(mc::GameSettings::eDebugSetting::DisableTooltips) == 0)
+		real_UIComponent_Tooltips_render(comp, i1, i2, enumVal);
+	return;
+	
+}
+DECL_FUNCTION(float, UIScene_getSafeZoneHalfHeight, uint32_t comp, uint32_t xyz) {
+	if(xf::DebugSettings->GetGameSetting(mc::GameSettings::eDebugSetting::DisableTooltips) == 0)
+		return real_UIScene_getSafeZoneHalfHeight(comp, xyz);
+	return 0.0f;
+	
+}
+DECL_FUNCTION(int, FJ_Hud_GetHotBarY, uint32_t comp) {
+	if(xf::DebugSettings->GetGameSetting(mc::GameSettings::eDebugSetting::DisableTooltips) == 0)
+		return real_FJ_Hud_GetHotBarY(comp);
+	return 0;
+	
+}
 DECL_HOOK(onFrameInGame, void) {
 	if(xf::DebugSettings->GetGameSetting(mc::GameSettings::eDebugSetting::ShowDevText) != 0)
-		debug.ShowDevelopmentText();
+		debug.ShowDevelopmentText(1);
 	if(xf::DebugConsole != 0 && mc::Minecraft::getInstance()->thePlayer != nullptr) { 
 		mc::UIComponent_DebugUIConsole* console = (mc::UIComponent_DebugUIConsole*)xf::DebugConsole;
 		mc::LocalPlayer* player = mc::Minecraft::getInstance()->thePlayer;
@@ -158,12 +206,13 @@ DECL_HOOK(onFrameInGame, void) {
 }
 DECL_HOOK(onFrameInMenu, void) {
 	if(xf::DebugSettings->GetGameSetting(mc::GameSettings::eDebugSetting::ShowDevText) != 0)
-		debug.ShowDevelopmentText();
+		debug.ShowDevelopmentText(1);
 }
 
 int c_main(void*) {
     code::init();
-
+	
+	
     REPLACE(0x02e8461c,  NavigateToScene);
     REPLACE(0x02F70968,  GetGameSettingsDebugMask);
     REPLACE(0x03226358,  MinecraftServer_tick);
@@ -179,6 +228,13 @@ int c_main(void*) {
     REPLACE(0x02f5c86c,  CMinecraftApp_DebugSettingsOn);
     REPLACE(0x020f66bc,  Biome_byId);
     REPLACE(0x031013B8,  GameRenderer_moveCameraToPlayer);
+    REPLACE(0x02FD3798,  BufferedImage_setMipmapEnable);
+    REPLACE(0x03418324,  Renderer_StateSetFogFarDistance);
+    REPLACE(0x034182D8,  Renderer_StateSetFogNearDistance);
+    REPLACE(0x03418370,  Renderer_StateSetFogDensity);
+    REPLACE(0x02E0E7C4,  UIComponent_Tooltips_render);
+    REPLACE(0x02DA7ECC,  UIScene_getSafeZoneHalfHeight);
+    REPLACE(0x02B4C81C,  FJ_Hud_GetHotBarY);
     HOOK(	0x02D9CAD0, onFrameInGame, 0);
     HOOK(	0x02D9C8B0, onFrameInMenu, 0);
 

@@ -5,6 +5,8 @@
 #include "../file/File.h"
 #include "../file/FileOutputStream.h"
 #include "../../entity/player/LocalPlayer.h"
+#include "../../ui/screen/TitleScreen.h"
+#include "../../ui/screen/OptionsScreen.h"
 
 namespace mc {
 	
@@ -57,6 +59,11 @@ namespace mc {
 			this->debugSettings.push_back(new mc::DebugSetting(L"Unlock All DLC", DebugSetting::eSettingType::BOOL, 1));
 			//this->debugSettings.push_back(new mc::DebugSetting(L"Unlock Camera", DebugSetting::eSettingType::BOOL, 0));
 			this->debugSettings.push_back(new mc::DebugSetting(L"Show Development Text", DebugSetting::eSettingType::BOOL, 1));
+			this->debugSettings.push_back(new mc::DebugSetting(L"More Thunder When Raining", DebugSetting::eSettingType::BOOL, 0));
+			this->debugSettings.push_back(new mc::DebugSetting(L"Disable Mipmapping", DebugSetting::eSettingType::BOOL, 0));
+			this->debugSettings.push_back(new mc::DebugSetting(L"Use Java Fog", DebugSetting::eSettingType::BOOL, 0));
+			this->debugSettings.push_back(new mc::DebugSetting(L"Disable Tooltips", DebugSetting::eSettingType::BOOL, 0));
+			this->debugSettings.push_back(new mc::DebugSetting(L"Open Title Screen", DebugSetting::eSettingType::FUNCTION, (uint32_t)(&OpenTitleScreen)));
 			//this->debugSettings.push_back(new mc::DebugSetting(L"Dump LocalPlayer", DebugSetting::eSettingType::FUNCTION, (uint32_t)(&DumpPlayerData)));
 		}
 		
@@ -68,6 +75,12 @@ namespace mc {
 			for(int i = 0; i < sizeof(LocalPlayer); i++)
 				stream->write(Data[i]);
 			stream->close();
+		}
+		
+		static void OpenTitleScreen() {
+			mc::TitleScreen* title = new mc::TitleScreen();
+			mc::OptionsScreen* optMenu = new mc::OptionsScreen(title, mc::Minecraft::getInstance()->options);
+			mc::Minecraft::getInstance()->setScreen(optMenu);
 		}
 		
 		uint32_t GetGameSetting(uint32_t setting)
@@ -111,6 +124,11 @@ namespace mc {
 			UnlockAllDLC,
 			//UnlockCamera,
 			ShowDevText,
+			moreThunder,
+			DisableMipmap,
+			JavaFog,
+			DisableTooltips,
+			OpenTitle,
 			//DumpLocalPlayer,
 		};
 		

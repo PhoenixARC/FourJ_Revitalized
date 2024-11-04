@@ -165,6 +165,9 @@ namespace mc {
         void getCameraEntity(struct Entity** integer) {
 			return code::Func<void, 0x0318E328, Minecraft*, struct Entity**>()(this, integer);
 		}
+		void setScreen(struct Screen* screen) {
+			code::Func<void, 0x03189944, Minecraft*, struct Screen*>()(this, screen);
+		}
 		
 		struct ClientPacketListener* getConnection(int i) {
 			return code::Func<struct ClientPacketListener*, 0x031B2654, Minecraft*, int>()(this, i); 

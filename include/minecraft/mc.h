@@ -101,6 +101,7 @@
 #include "rendering/buffer/BufferBuilder.h"
 #include "rendering/buffer/BufferedImage.h"
 
+#include "rendering/LevelRenderer.h"
 #include "rendering/GameRenderer.h"
 #include "rendering/CameraController.h"
 #include "rendering/Font.h"
@@ -108,6 +109,10 @@
 #include "rendering/Tesselator.h"
 
 #include "ui/Gui.h"
+#include "ui/screen/Screen.h"
+#include "ui/screen/TitleScreen.h"
+#include "ui/screen/CreateWorldScreen.h"
+#include "ui/screen/OptionsScreen.h"
 #include "ui/scene/UIScene.h"
 #include "ui/scene/SettingsMenu.h"
 #include "ui/scene/Scenes/UIScene_DebugMenu.h"

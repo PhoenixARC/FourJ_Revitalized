@@ -20,6 +20,10 @@ namespace mc {
         bool isAppPaused()  {
             return code::Func<bool, 0x02f36eec, CMinecraftApp*>()(this);
         }
+		
+        bool GetGameStarted()  {
+            return code::Func<bool, 0x02f2a28c, CMinecraftApp*>()(this);
+        }
 
         static CMinecraftApp* getInstance() {
             #ifdef CEMU

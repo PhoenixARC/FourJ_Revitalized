@@ -83,17 +83,24 @@ namespace mc {
 			{
 				cuic->ShowUIDebugConsole(State);
 			}
+			if(ID2 == mc::GameSettings::eDebugSetting::DisableMipmap)
+			{
+				if(mc::Minecraft::getInstance()->thePlayer != nullptr) {
+					mc::Minecraft::getInstance()->textures->reloadall();
+					mc::Minecraft::getInstance()->levelRenderer->reloadAll();
+				}
+			}
 		}
 		
 		static void handlePress(UIScene* _this, int ID, int ID2)
 		{
 			mc::GameSettings* settings = (mc::GameSettings*)mc::GameSettings::GetGameSettingsDebugMask(0xFFABCD00, 0);
 			
-			//switch(ID2){
-				//case mc::GameSettings::eDebugSetting::DumpLocalPlayer:
-				//((void (*)())settings->debugSettings[ID2]->Value)();
-				//break;
-			//}
+			switch(ID2){
+				case mc::GameSettings::eDebugSetting::OpenTitle:
+				((void (*)())settings->debugSettings[ID2]->Value)();
+				break;
+			}
 		}
 		
 		static void Log(const wchar_t* text)
