@@ -182,6 +182,19 @@ DECL_FUNCTION(int, FJ_Hud_GetHotBarY, uint32_t comp) {
 	return 0;
 	
 }
+DECL_FUNCTION(mstd::wstring*, Language_getElement, mc::Language* _this, mstd::wstring* target, mstd::wstring* ElementName) {
+	wchar_t* DEBUG = new wchar_t[0x40];
+	mc_swprintf(DEBUG, 0x40, L"--- %ls", ElementName->c_str());
+	Log(DEBUG);
+	
+	mstd::wstring* retValue = mc::Language::getElement(_this, target, ElementName);
+	
+	
+	return retValue;
+}
+DECL_FUNCTION(void, GuiComponent_drawCenteredString, uint32_t component, mc::Font* font,  const mstd::wstring& string, int x, int y, int size) {
+	xf::GUI::DrawHelper::DisplayText(font, string, 1.0f, x - (font->width(string) / 2.0f), y, 0xffffffff);
+}
 DECL_HOOK(onFrameInGame, void) {
 	if(xf::DebugSettings->GetGameSetting(mc::GameSettings::eDebugSetting::ShowDevText) != 0)
 		debug.ShowDevelopmentText(1);
@@ -209,9 +222,38 @@ DECL_HOOK(onFrameInMenu, void) {
 		debug.ShowDevelopmentText(1);
 }
 
+uint32_t getHash(wchar_t* _str, int _len) {
+	uint32_t output = 0x13;
+	for(int i = 0; i < _len; i++) {
+		output += (output ^ ((int)_str[i]));
+	}
+	return output;
+}
+
+wchar_t* items[] = {
+	L"options.title",
+	L"options.music",
+	L"options.off",
+	L"options.sound",
+	L"options.invertMouse",
+	L"options.off",
+	L"options.sensitivity",
+	L"options.sensitivity.max",
+	L"options.difficulty",
+	L"options.difficulty.easy",
+	L"options.video",
+	L"options.controls",
+	L"gui.done",
+};
+
 int c_main(void*) {
     code::init();
 	
+			wchar_t* dbg = new wchar_t[0x40];
+	for(wchar_t* w : items) {
+		mc_swprintf(dbg, 0x40, L"%ls = %#p,", w, getHash(w, mc_wcslen(w)));
+		Log(dbg);
+	}
 	
     REPLACE(0x02e8461c,  NavigateToScene);
     REPLACE(0x02F70968,  GetGameSettingsDebugMask);
@@ -235,6 +277,8 @@ int c_main(void*) {
     REPLACE(0x02E0E7C4,  UIComponent_Tooltips_render);
     REPLACE(0x02DA7ECC,  UIScene_getSafeZoneHalfHeight);
     REPLACE(0x02B4C81C,  FJ_Hud_GetHotBarY);
+    REPLACE(0x025B3C04,  Language_getElement);
+    REPLACE(0x031341f0,  GuiComponent_drawCenteredString);
     HOOK(	0x02D9CAD0, onFrameInGame, 0);
     HOOK(	0x02D9C8B0, onFrameInMenu, 0);
 

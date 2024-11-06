@@ -27,6 +27,9 @@ wchar_t* getEffectName(int id) {
 void mc_wcscpy(const wchar_t* out, const wchar_t* in) {
 	code::Func<void, 0x0382C734, const wchar_t*, const wchar_t*>()(out, in);
 }
+bool mc_wcscmp(const wchar_t* out, const wchar_t* in) {
+	code::Func<bool, 0x0382C75C, const wchar_t*, const wchar_t*>()(out, in);
+}
 
 int mc_wcslen(const wchar_t* in) {
 	return code::Func<int, 0x0382c718, const wchar_t*>()(in);

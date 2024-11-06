@@ -16,6 +16,14 @@ namespace mstd {
             return (length > 7) ? pointer : str;
         }
 
+        const wstring& assign(const wstring& _str) {
+			
+			this->str[0] =  0;
+			this->length2 = 7;
+			this->length =  0;
+            return code::Func<const mstd::wstring&, 0x02bb02c0, wstring*, const wstring&, int, int>()(this, _str, 0, 0xffffffff);
+        }
+
         const wstring& assign(const wchar_t* _str, int _length) {
 			
 			this->str[0] =  0;
@@ -30,6 +38,10 @@ namespace mstd {
 			this->length2 = 7;
 			this->length =  0;
             return code::Func<const mstd::wstring&, 0x02e33e08, wstring*, const char*, int>()(this, _str, _length);
+        }
+		
+		const int compare(const wchar_t* _str, int _length) {
+            return code::Func<const int, 0x03159BA0, wstring*, int, uint32_t, const wchar_t*, int>()(this, 0, this->length, _str, _length);
         }
 
         bool operator==(const wchar_t* _str) {

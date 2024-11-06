@@ -7,6 +7,7 @@
 #include "../../entity/player/LocalPlayer.h"
 #include "../../ui/screen/TitleScreen.h"
 #include "../../ui/screen/OptionsScreen.h"
+#include "../../ui/screen/FakeOptionsScreen.h"
 
 namespace mc {
 	
@@ -79,6 +80,7 @@ namespace mc {
 		
 		static void OpenTitleScreen() {
 			mc::TitleScreen* title = new mc::TitleScreen();
+			// mc::FakeOptionsScreen* optMenu = new mc::FakeOptionsScreen(title, mc::Minecraft::getInstance()->options);
 			mc::OptionsScreen* optMenu = new mc::OptionsScreen(title, mc::Minecraft::getInstance()->options);
 			mc::Minecraft::getInstance()->setScreen(optMenu);
 		}
